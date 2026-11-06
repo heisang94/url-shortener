@@ -3,9 +3,6 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { saveUrl } from "../../../lib/db";
 
-
-export const runtime = "nodejs";
-
 const MAX_URL_LENGTH = 2048;
 
 const ALPHABET =
@@ -137,7 +134,7 @@ export async function POST(request) {
 
     // 4주차 실습: 생성한 URL 매핑을 Neon DB에 저장
     await saveUrl(shortCode, originalUrl);
-    
+
     const baseUrl = new URL(request.url).origin;
 
     /*
