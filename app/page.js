@@ -1,69 +1,95 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
+  const [url, setUrl] = useState("");
+  const [result, setResult] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function shorten(e) {
+    e.preventDefault();
+    setResult("");
+    setMessage("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/shorten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ originalUrl: url })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMessage(data.error?.message || "오류가 발생했습니다.");
+        return;
+      }
+
+      setResult(data.shortUrl);
+    } catch {
+      setMessage("서버에 연결할 수 없습니다.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main style={{
+      maxWidth: 600,
+      margin: "100px auto",
+      padding: 24,
+      fontFamily: "Arial, sans-serif"
+    }}>
+      <h1>URL Shortener</h1>
+      <p>긴 URL을 짧게 만들어 보세요.</p>
+
+      <form onSubmit={shorten}>
+        <input
+          type="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="https://example.com"
+          required
+          style={{
+            padding: 12,
+            width: "100%",
+            boxSizing: "border-box"
+          }}
         />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            marginTop: 12,
+            padding: "12px 24px",
+            cursor: "pointer"
+          }}
+        >
+          {loading ? "처리 중..." : "URL 단축하기"}
+        </button>
+      </form>
+
+      {result && (
+        <div style={{ marginTop: 24 }}>
+          <p>단축된 URL:</p>
+          <a href={result} target="_blank" rel="noreferrer">
+            {result}
           </a>
         </div>
-      </main>
-    </div>
+      )}
+
+      {message && (
+        <p style={{ color: "red", marginTop: 20 }}>
+          {message}
+        </p>
+      )}
+    </main>
   );
 }
