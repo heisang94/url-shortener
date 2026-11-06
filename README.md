@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hello Cloud Starter
 
-## Getting Started
+클라우드 컴퓨팅 수업 1주차 실습용 기본 프로젝트입니다.
 
-First, run the development server:
+## 실습 목표
+
+- GitHub 저장소를 내 계정으로 복사한다.
+- 프로젝트를 clone한다.
+- 메인 페이지의 문구를 수정한다.
+- GitHub에 commit/push한다.
+- Vercel에 배포한다.
+- 코드를 수정하면 자동으로 다시 배포되는 것을 확인한다.
+
+## 실행 방법
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 아래 주소를 엽니다.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 수정할 파일
 
-## Learn More
+```text
+app/page.js
+```
 
-To learn more about Next.js, take a look at the following resources:
+`Hello Cloud!` 문구를 나만의 문장으로 바꿔보세요.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+예:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+Hello Cloud!
+My first deployment is live.
+```
 
-## Deploy on Vercel
+## GitHub에 올리지 말아야 할 것
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+다음은 절대 올리면 안 됨:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+node_modules/
+.next/
+.env
+.env.local
+.vercel/
+```
+
+## 1주차 실습 과제
+
+```text
+1. 강의 starter repository를 내 GitHub 계정으로 복사한다.
+2. 내 컴퓨터에 clone한다.
+3. app/page.js 파일의 Hello Cloud! 문구를 자기 이름이나 문장으로 바꾼다.
+4. 변경 내용을 commit하고 push한다.
+5. Vercel에 배포한다.
+6. 배포된 URL을 제출한다.
+```
